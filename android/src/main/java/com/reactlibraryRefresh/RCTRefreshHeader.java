@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.reactlibraryRefresh;
 
 import android.content.Context;
 import android.view.View;
