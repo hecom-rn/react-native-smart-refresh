@@ -71,6 +71,9 @@
     }
 }
 - (void)setRefreshing:(BOOL *)refreshing{
+    if (refreshing) {
+        [self beginRefreshing];
+    }
     if(!refreshing){
         [self endRefreshing];
     }
