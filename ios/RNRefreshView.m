@@ -71,7 +71,7 @@
     }
 }
 - (void)setRefreshing:(BOOL *)refreshing{
-    if (refreshing) {
+    if (refreshing && (self.state == MJRefreshStateIdle || self.state == MJRefreshStateNoMoreData) ) {
         [self beginRefreshing];
     }
     if(!refreshing){
