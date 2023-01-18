@@ -7,6 +7,12 @@
 
 #import "RNRefreshView.h"
 
+@interface RNRefreshView()
+
+@property (nonatomic, assign) NSTimeInterval refreshingTime;
+
+@end
+
 @implementation RNRefreshView
 
 /*
@@ -20,7 +26,6 @@
 {
     self = [super init];
     if (self) {
-        
     }
     return self;
 }
@@ -70,11 +75,15 @@
         self.onChangeOffset(@{@"offset":@(fabs(newPoint.y))});
     }
 }
-- (void)setRefreshing:(BOOL *)refreshing{
-    if (refreshing && (self.state == MJRefreshStateIdle || self.state == MJRefreshStateNoMoreData) ) {
-        [self beginRefreshing];
+- (void)setRefreshing:(BOOL)refreshing{
+    if (refreshing && (self.state == MJRefreshStateIdle || self.state == MJRefreshStateNoMoreData)) {
+        NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+        if ((self.refreshingTime && now - self.refreshingTime > 1) || self.refreshingTime == 0) {
+            [self beginRefreshing];
+            self.refreshingTime = now;
+        }
     }
-    if(!refreshing){
+    if(!refreshing && self.state == MJRefreshStateRefreshing){
         [self endRefreshing];
     }
 }
